@@ -26,3 +26,24 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.movie-container {
+  display: grid;
+  margin: 30px auto;
+  width: 90%;
+  grid-template-columns:  repeat(5, 1fr);
+  grid-template-rows: repeat(4, 450px);
+}
+
+.movie-item {
+  background-color: #222;
+  color: #fff;
+  margin: 10px;
+}
+
+.img {
+  height: 100%;
+  width: 100%;
+}
+
+

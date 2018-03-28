@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import SearchBar from "./components/search_bar";
+import MovieList from "./components/movie_list.js";
 
 
 import axios from  "axios";
@@ -14,15 +15,13 @@ class App extends Component {
     this.state = {
       movies: []
     };
+
+    this.videoSearch = this.videoSearch.bind(this);
   }
 
   videoSearch(term) {
     axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${APIkey}&query=${term}&page=1`)
-      .then(response => {
-        console.log(response)
-        const movies = response.data.results;
-        this.setState({movies});
-      })
+      .then(response => this.setState({movies: response.data.results}))
       .catch(err => console.log(err))
   };
 
@@ -31,6 +30,7 @@ class App extends Component {
     return (
       <div className="App">
         <SearchBar onSearchTermChange={this.videoSearch} />
+        <MovieList movies={this.state.movies} />
       </div>
     );
   }
