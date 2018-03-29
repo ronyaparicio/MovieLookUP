@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import SearchBar from "./components/search_bar";
+import Navigation from "./components/navigation.js";
 import MovieList from "./components/movie_list.js";
 
 
@@ -17,7 +18,16 @@ class App extends Component {
     };
 
     this.videoSearch = this.videoSearch.bind(this);
+    this.genreChange = this.genreChange.bind(this);
   }
+
+  genreChange(genre) {
+    console.log(genre);
+    axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${APIkey}&sort_by=popularity.desc&with_genres=${genre}`)
+    
+      .then(response => this.setState({movies: response.data.results}))
+      .catch(err => console.log(err))
+  };
 
   videoSearch(term) {
     axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${APIkey}&query=${term}&page=1`)
@@ -29,7 +39,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <SearchBar onSearchTermChange={this.videoSearch} />
+        <Navigation genreChange={this.genreChange} onSearchTermChange={this.videoSearch} />
         <MovieList movies={this.state.movies} />
       </div>
     );
